@@ -14,10 +14,7 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "root",
-        "password": "",
-        "database": "hey_yall_db",
-        "host": "localhost",
+        "use_env_variable": "JAWSDB_URL",
         "dialect": "mysql"
     }
 }
