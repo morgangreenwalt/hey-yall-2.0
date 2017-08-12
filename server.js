@@ -14,11 +14,17 @@ var mysql = require("mysql");
 var config = require("./db.js");
 var connection;
 
-if (process.env.JAWSDB_URL) {
-    connection = mysql.createConnection(process.env.JAWSDB_URL);
-} else {
-    connection = mysql.createConnection(config.mySQLKeys);
-}
+// if (process.env.JAWSDB_URL) {
+//     connection = mysql.createConnection({
+//         host: 'mna97msstjnkkp7h.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+//         port: 3306,
+//         user: 'xxxv0dsbo8uhrx63',
+//         password: 'acxw3kspv5wlu8tz',
+//         database: 'htb7qjtmmjdjyih4'
+//     });
+// } else {
+//     connection = mysql.createConnection(config.mySQLKeys);
+// }
 
 //Authentication packages
 var session = require("express-session");
@@ -55,8 +61,14 @@ app.use(expressValidator()); // this line must be immediately after any of the b
 
 // var sessionStore = new MySQLStore(config.mySQLKeys);
 
-if (process.env.JAWSDB_url) {
-    var sessionStore = new MySQLStore(process.env.JAWSDB_URL);
+if (true) {
+    var sessionStore = new MySQLStore({
+        host: 'mna97msstjnkkp7h.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        port: 3306,
+        user: 'xxxv0dsbo8uhrx63',
+        password: 'acxw3kspv5wlu8tz',
+        database: 'htb7qjtmmjdjyih4'
+    });
 } else {
     var sessionStore = new MySQLStore(config.mySQLKeys);
 }
