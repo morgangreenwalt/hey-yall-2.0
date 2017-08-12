@@ -12,8 +12,13 @@ var expressValidator = require('express-validator');
 //database
 var mysql = require("mysql");
 var config = require("./db.js");
+var connection;
 
-// var connection = mysql.createConnection(config.mySQLKeys);
+if (process.env.JAWSDB_URL) {
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+    connection = mysql.createConnection(config.mySQLKeys);
+}
 
 //Authentication packages
 var session = require("express-session");
