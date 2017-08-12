@@ -95,34 +95,78 @@ module.exports = function(app) {
     app.post("/meetups/:eventID/:userName", function(req, res) {
 
         db.user.findAll({
+            attributes: ["id"],
             where: { userName: req.params.userName }
         }).then(function(getEvents2) {
-            console.log(getEvents2)
+
             db.eventMembers.create({
                 eventId: req.params.eventID,
                 userId: getEvents2[0].id,
             }).then(function(newEvent) {
-                res.redirect("/");
+                db.event.findAll({
+                    attributes: ["totalAttendees"],
+                    where: { id: req.params.eventID }
+                }).then(function(getEvent) {
+                    var total = getEvent[0].totalAttendees + 1
+                    db.event.update({
+                        totalAttendees: total,
+                    }).then(function(getEvent3) {
+                        res.redirect("/");
+                    })
+                })
             });
 
         });
     });
 
+
+    app.post("/suggestions/like/:suggestionID", function(req, res) {
+
+        db.eventSuggestions.findAll({
+            attributes: ["upVote"],
+            where: { id: req.params.suggestionID }
+        }).then(function(getEvent) {
+            var total = getEvent[0].upVote + 1
+            db.eventSuggestions.update({
+                upVote: total,
+            }).then(function(getEvent3) {
+                res.redirect("/");
+            })
+        })
+    });
+
+    app.post("/suggestions/dislike/:suggestionID", function(req, res) {
+
+        db.eventSuggestions.findAll({
+            attributes: ["downVote"],
+            where: { id: req.params.suggestionID }
+        }).then(function(getEvent) {
+            var total = getEvent[0].downVote + 1
+            db.eventSuggestions.update({
+                downVote: total,
+            }).then(function(getEvent3) {
+                res.redirect("/");
+            })
+        })
+    });
+
     app.get("/api/userNameToId", function(req, res) {
         db.user.findAll({
+            attributes: ["id"],
             where: { userName: "morgan greenwalt" }
         }).then(function(getEvents2) {
-            console.log(getEvents2[0].id)
-            res.json(getEvents2[0].id)
-            res.render("indiv_meetup", eventsObject);
-            // db.event.create({
-            //     eventName: req.body.eventName,
-            //     date: req.body.date,
-            //     status: "open",
-            //     totalAttendees: 0
-            // }).then(function(newEvent) {
-            //     res.redirect("/main");
-            // });
+            var eventsObject = {
+                eventSuggestions: getEvents2[0].id,
+            };
+            res.json(eventsObject)
+                // db.event.create({
+                //     eventName: req.body.eventName,
+                //     date: req.body.date,
+                //     status: "open",
+                //     totalAttendees: 0
+                // }).then(function(newEvent) {
+                //     res.redirect("/main");
+                // });
 
         });
     });
@@ -139,5 +183,18 @@ module.exports = function(app) {
             res.render("meetups", eventsObject);
             // res.json(eventsObject);
         });
+    });
+
+    //Morgan's routes -- Event page 
+    app.post("/meetups", function(req, res) {
+        db.event.create({
+            eventName: req.body.eventName,
+            date: req.body.date,
+            status: "open",
+            totalAttendees: 0
+        }).then(function(newEvent) {
+            res.redirect("/main");
+        });
+        console.log("I'm trying to add a new event with the name " + req.body.eventName);
     });
 };
