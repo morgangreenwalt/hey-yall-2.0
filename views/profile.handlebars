@@ -1,71 +1,94 @@
-<head>
-	{{!-- <link rel="stylesheet" type="text/css" href="assets/css/skeleton.css"> --}}
-</head>
+ {{!-- <head>
+	<link rel="stylesheet" type="text/css" href="assets/css/skeleton.css">
+</head>  --}}
+
 
 {{> navbar}}
 
 <div class="container">
     <div class="row">
         <div class="col-md-4">
+
             <div class="panel panel-default">
                 <div class="panel-body">
+
                     <div class="row">
                         <div class="col-md-6">
-                        <div class="user-profile">    
-                            <img class="text-center" src="uploads/{{ data.image }}" width="100%" alt=""><br>
-                                <form enctype="multipart/form-data" action="/profile" method="POST">
-                                <input type="file" name="image">
-                                <input type="submit" class="btn btn-site btn-lg" style="margin-top:10px;" value="Upload Picture">
-                                </form>
-                            <h2 id="userNameLoginName">{{ data.name }}</h2>
-                            <h4>Austin, TX</h4>
-                             <button class="btn btn-site btn-lg"><a style="color: inherit; text-decoration: none;" href="/main">Update Status</a></button>
-                        </div>        
                             
-                        <div class="friends">    
-                            <h3>Friends</h3>
-                            {{#each data.friends}}
-                                <form action="/{{this.id}}" method="POST">
-                                    <input title="{{this.userName}}" alt="Submit" id="image" type="image" src="uploads/{{this.image}}" height="100px">
-                                    <div style="position: relative; top: -30px; left: -25px; color:white; font-size: 15px; text-align:center">{{ this.userName }}</div>
-                                </form>
-                            {{/each}}
-                        </div>    
-
-                        <div class="friend-requests">
-                            <h3>Friend Requests</h3>
-                            {{#each data.friendRequest}}
-                                <form style="float: left; margin-right: 5px;" action="/profile/{{this.id}}" method="POST">
-                                    <input title="{{this.userName}}" alt="Submit" id="image" type="image" src="uploads/{{this.image}}" width="80px" height="120px">
-                                    <div style="position: relative; top:-29px; color:white; font-size: 15px; text-align:center; text-shadow: 1px 1px black;">{{ this.userName }}</div>
-                                    <div class="row">
-                                    <button class="btn btn-site btn-lg" type="submit" style="width: 75px; padding-left: 13px;">Accept</button>
-                                    </div>
-                                </form>
-                            {{/each}}
+                             <img class="text-center" src="uploads/{{ data.image }}" width="100%" alt="">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <form enctype="multipart/form-data" action="/profile" method="POST">
+                                    <input type="file" name="image"><br>
+                                    <input class="btn btn-site btn-lg" type="submit" value="Upload Picture">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                             <h2 id="userNameLoginName">{{ data.name }}</h2>
+                                <h4>Austin, TX</h4>
+                             <button class="btn btn-site btn-lg"><a style="color: inherit; text-decoration: none;" href="/main">Update Status</a></button>
+                        </div>
+                    </div>
+                   
+                        <div class="friends">
+                            <h5>Friends</h5>
+                                     <div class="row">
+                                        <div class="col-md-12">
+                                            {{#each data.friends}}
+                                                <form style="float: left; margin-right: 10px;" action="/{{this.id}}" method="POST">
+                                                    <input title="{{this.userName}}" alt="Submit" id="image" type="image" src="uploads/{{this.image}}" width="80px" height="120px">
+
+                                                    <div style="position: relative; top:-29px; color:white; font-size: 15px; text-align:center">{{ this.userName }}</div>
+                                                </form>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                        </div>
+                   
+                   
+                         <div class="friend-requests">
+                            <h5>Friend Request</h5>
+                                <div class="row">
+                                        <div class="col-md-12">
+                                            {{#each data.friendRequest}}
+                                                <form style="float: left; margin-right: 5px;" action="/profile/{{this.id}}" method="POST">
+                                                    <input title="{{this.userName}}" alt="Submit" id="image" type="image" src="uploads/{{this.image}}" width="80px" height="120px">
+                                                    <div style="position: relative; top:-29px; color:white; font-size: 15px; text-align:center; text-shadow: 1px 1px black;">{{ this.userName }}</div>
+                                                    <div class="row">
+                                                    <button class="btn btn-site btn-lg" type="submit" style="width: 75px; padding-left: 13px;">Accept</button>
+                                                    </div>
+                                                </form>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                        </div> 
+                    
                 </div>
             </div>
         </div>
-    </div>
 
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
                         <h2>{{data.name}}'s Meetups</h2>
-                        {{#each event}}
+                        {{#each data.eventsObject}}
 							<div class="col-md-12">
 								<div class="col-md-4">
-									<a href="/{{data.eventName}}"><img class="calendar" src="assets/img/calendar.png" width="100%">
+									<a href="/{{this.eventName}}"><img class="calendar" src="assets/img/calendar.png" width="100%">
 									<h3 class="calendar-date">{{this.date}}</h3></a>	
 								</div>
 								<div class="col-md-8">
 									<div class="event-info">
-										<h3 style="color: #FB7722;">{{data.eventName}}</h3>
+										<h3 style="color: #FB7722;">{{this.eventName}}</h3>
 										<h4 style="font-size: 24px; color: #000;">Total Attendees: 
-										{{data.totalAttendees}}</h3>
+										{{this.totalAttendees}}</h3>
 									</div>	
 								</div>
 							</div>
@@ -76,3 +99,5 @@
         </div>
     </div>
 </div>
+
+{{> footer}}

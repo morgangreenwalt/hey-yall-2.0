@@ -337,6 +337,34 @@ module.exports = function(app) {
             });
         });
     });
+
+    app.get("/meetups/:eventID/:userName", authenticationMiddleware(), function(req, res) {
+
+        db.user.findAll({
+            attributes: ["id"],
+            where: { userName: req.params.userName }
+        }).then(function(getEvents2) {
+
+            db.eventMembers.create({
+                eventId: req.params.eventID,
+                userId: getEvents2[0].id,
+            }).then(function(newEvent) {
+                db.event.findAll({
+                    attributes: ["totalAttendees"],
+                    where: { id: req.params.eventID }
+                }).then(function(getEvent) {
+                    var total = getEvent[0].totalAttendees + 1
+                    db.event.update({
+                        totalAttendees: total,
+                    }).then(function(getEvent3) {
+                        res.redirect("/");
+                    })
+                })
+            });
+
+        });
+    });
+
 };
 
 passport.serializeUser(function(user_id, done) {

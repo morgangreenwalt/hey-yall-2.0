@@ -16,7 +16,7 @@
                                 <h3>{{this.eventName}}<h3>
                                 <h6>Date: {{this.date}}<h6>
                                 <h6>Total Attendees: {{this.totalAttendees}}<h6>   
-                                <button class="btn btn-site btn-sm" type="submit"><a style="color: inherit; text-decoration: none;">Join</a></button>
+                                <a href="/meetups/{{this.id}}/{{this.userName}}" style="color: inherit; text-decoration: none;"><button class="btn btn-site btn-sm" type="submit">Join</button></a>
                             {{/each}} 
                         </div>
 					</div>
@@ -49,7 +49,7 @@
                                 <h4 style="font-size: 24px; color: #000;">{{this.venue}}</h4>
                                 <p>Up Votes: {{this.upVote}}</p>
                                 <p>Down Votes: {{this.downVote}}</p>
-                                <button class="btn btn-site btn-sm" type="submit" id="info"><a style="color: inherit; text-decoration: none;">More Info</a></button>
+                                <a style="color: inherit; text-decoration: none;" href="{{this.link}}" target="_blank"><button class="btn btn-site btn-sm" type="submit" id="info">More Info</button></a>
                             </div>
                             {{!-- <div class="col-md-4">
                                 <a href="suggestions/like/{{this.id}}"><input type="image" src="/assets/img/thumbsUP.jpg" height="80px" width="60px" alt="Submit"></a>
@@ -64,3 +64,4 @@
 			</div>
 		</div>
 	</div>
+    {{> footer}}

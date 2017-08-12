@@ -72,7 +72,7 @@ module.exports = function(app) {
                 model: db.event,
                 // include: [db.user]
             }],
-            where: { eventId: req.params.eventID }
+            where: { $or: [{ eventId: req.params.eventID }, { date: "2017-08-13" }] }
         }).then(function(getEvents) {
 
             db.event.findAll({
@@ -92,32 +92,32 @@ module.exports = function(app) {
         });
     });
 
-    app.post("/meetups/:eventID/:userName", function(req, res) {
+    // app.get("/meetups/:eventID/:userName", function(req, res) {
 
-        db.user.findAll({
-            attributes: ["id"],
-            where: { userName: req.params.userName }
-        }).then(function(getEvents2) {
+    //     db.user.findAll({
+    //         attributes: ["id"],
+    //         where: { userName: req.params.userName }
+    //     }).then(function(getEvents2) {
 
-            db.eventMembers.create({
-                eventId: req.params.eventID,
-                userId: getEvents2[0].id,
-            }).then(function(newEvent) {
-                db.event.findAll({
-                    attributes: ["totalAttendees"],
-                    where: { id: req.params.eventID }
-                }).then(function(getEvent) {
-                    var total = getEvent[0].totalAttendees + 1
-                    db.event.update({
-                        totalAttendees: total,
-                    }).then(function(getEvent3) {
-                        res.redirect("/");
-                    })
-                })
-            });
+    //         db.eventMembers.create({
+    //             eventId: req.params.eventID,
+    //             userId: getEvents2[0].id,
+    //         }).then(function(newEvent) {
+    //             db.event.findAll({
+    //                 attributes: ["totalAttendees"],
+    //                 where: { id: req.params.eventID }
+    //             }).then(function(getEvent) {
+    //                 var total = getEvent[0].totalAttendees + 1
+    //                 db.event.update({
+    //                     totalAttendees: total,
+    //                 }).then(function(getEvent3) {
+    //                     res.redirect("/");
+    //                 })
+    //             })
+    //         });
 
-        });
-    });
+    //     });
+    // });
 
 
     app.post("/suggestions/like/:suggestionID", function(req, res) {
