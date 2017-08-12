@@ -1,61 +1,66 @@
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	{{!-- <link rel="stylesheet" type="text/css" href="style.css"> --}}
-        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/morgan.css">
 </head>
 
 {{> navbar}}
 
 	<div class="container">
-		{{!-- <a id="join" class="waves-effect waves-light btn" href="">Join</a> --}}
 		<div class="row">
-			<div class="col m3">
-				<div class="card">
-					<div class="card-content">
-                        {{#each meetup}} 
-                            <p>{{this.eventName}}<p>
-                            <p>{{this.date}}<p>
-                            <p>{{this.totalAttendees}}<p>   
-                            <button class="btn btn-site btn-sm" type="submit"><a style="color: inherit; text-decoration: none;">Join</a></button>
-                        {{/each}} 
-					</div>
-				</div>
-			
-				<div class="card">
-					<div class="card-content black-text">
-						<span class="card-title">Members</span>
-                         {{#each members}} 
-						<img class="center" src=""+image"">
-                            <p{{this.name}}<p>   
-                         {{/each}} 
-					</div>
-				</div>
-
-			</div>
-
-			<div class="col m9">
-                 {{#each eventSuggestions}} 
-                <div class="row">
-                    <div class="card horizontal">
-                    <div class="card-stacked">
-                        <div class="card-content flex">
-                        <p>{{this.title}}</p>
-                        <p>{{this.venue}}</p>
-                        <p>Up Votes: {{this.upVote}}</p>
-                        <p>Down Votes: {{this.downVote}}</p>
-                        <a id="info" class="waves-effect waves-light btn" href="">More Info</a>
+            <div class="col-md-4">
+			<div class="row">
+				<div class="panel panel-default">
+					<div class="panel-body">
+                        <div class="col-md-12">
+                            {{#each meetup}} 
+                                <h3>{{this.eventName}}<h3>
+                                <h6>Date: {{this.date}}<h6>
+                                <h6>Total Attendees: {{this.totalAttendees}}<h6>   
+                                <button class="btn btn-site btn-sm" type="submit"><a style="color: inherit; text-decoration: none;">Join</a></button>
+                            {{/each}} 
                         </div>
-                    </div>
-                    <div class="card-action flex">
-                        <a href="suggestions/like/{{this.id}}"><input type="image" src="/assets/img/thumbsUP.jpg" height="80px" width="60px" alt="Submit"></a>
-                        <a href="suggestions/dislike/{{this.id}}"><input type="image" src="/assets/img/thumbsDOWN.png" height="100px" width="100px"  alt="Submit"></a>
-                    </div>
+					</div>
+				</div>
+			</div>
+            <div class="row">
+				<div class="panel panel-default">
+					<div class="panel-body">
+                        <div class="col-md-12">
+                            <h3>Members</h3>
+                                {{#each members}} 
+                                <img class="center" src=""+image"">
+                                    <p{{this.name}}<p>   
+                                {{/each}}
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+			<div class="col-md-8">
+                <div class="row">
+                    <div class="panel panel-default">
+					<div class="panel-body">
+                    <div class="col-md-12">
+                        {{#each eventSuggestions}} 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 style="color: #FB7722;">{{this.title}}</h3>
+                                <h4 style="font-size: 24px; color: #000;">{{this.venue}}</h4>
+                                <p>Up Votes: {{this.upVote}}</p>
+                                <p>Down Votes: {{this.downVote}}</p>
+                                <button class="btn btn-site btn-sm" type="submit" id="info"><a style="color: inherit; text-decoration: none;">More Info</a></button>
+                            </div>
+                            {{!-- <div class="col-md-4">
+                                <a href="suggestions/like/{{this.id}}"><input type="image" src="/assets/img/thumbsUP.jpg" height="80px" width="60px" alt="Submit"></a>
+                                <a href="suggestions/dislike/{{this.id}}"><input type="image" src="/assets/img/thumbsDOWN.png" height="100px" width="100px"  alt="Submit"></a>
+                            </div> --}}
+                        </div><br><hr>
+                        {{/each}}
                     </div>
                 </div>
-                 {{/each}} 
 			</div>
-
+                </div>
+			</div>
 		</div>
 	</div>
