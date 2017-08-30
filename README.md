@@ -1,7 +1,7 @@
 Hey Y'all 2.0
 -------
 
-An interactive application getting user preferences and providing suggestions on things to do in Austin. Sign up today! 
+An interactive web application getting user preferences and providing suggestions on things to do in Austin. Sign up today! 
 
 Technologies used: 
 1. Nod.js
